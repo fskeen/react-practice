@@ -1,63 +1,36 @@
-/*// set up where the React stuff is injected
-const appRoot = document.querySelector("#app");
 
-// functions go here!
+// create component w 3 methods: render, constructor, handletogglevisibility
+//state: visibility: false
 
-const showOrHide = () => {
-    if (btn.innerText === "Show Details") {
-        btn.innerText = "Hide Details";
-        pTag.innerText = "Whoa, check out these deets!";
-        renderer()
-        return 1
-    } else {
-        btn.innerText = "Show Details";
-        pTag.innerText = "";
-        renderer()
-        return 0
-    }
-};
+class VisibilityToggle extends React.Component {
+    constructor(props) {
+        super(props);
+        // set state here
+        this.toggleVis = this.toggleVis.bind(this);
+        this.state = {
+            visibility: false
+        }
+    };
 
-// render function goes here
+    toggleVis () {
+        return this.setState((a) => ({visibility: !a.visibility}))
+    };
 
-const renderer = () => {
-    const template = (
-        // injected code goes here
+    render () {
+        return (
         <div>
             <h1>Visibility Toggle</h1>
-            <button id="btn" onClick={showOrHide}>Show Details</button>
-            <p id="pTag"></p>
-            
-        </div>        
-    )
-    // telling the page what to use React on and where in the HTML to inject it
-    ReactDOM.render(template, appRoot);
-};
-
-renderer() */
-
-
-let visibility = false;
-
-const toggleVis = () => {
-    visibility = !visibility;
-    renderer();
-};
-
-const renderer = () => {
-    const template = (
-        <div>
-            <h1>Visibility Toggle</h1>
-            <button onClick={toggleVis}>
-                {visibility ? "Hide Details" : "Show Details"}
+            <button onClick={this.toggleVis}>
+                {this.state.visibility ? "Hide Details" : "Show Details"}
             </button>
 
-            {visibility && (
+            {this.state.visibility && (
                 <div>
                     <p>Hey, check out these DETAILS!!</p>
                 </div>)}
         </div>
-    );
-    ReactDOM.render(template, document.querySelector("#app"));
+        )
+    };
 };
 
-renderer();
+ReactDOM.render(<VisibilityToggle />, document.querySelector("#app"))
